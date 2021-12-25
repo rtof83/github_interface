@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as S from "./styled";
 import useGithub from "../../hooks/github-hooks";
 
 const Header = () => {
   const { getUser } = useGithub();
   const [ usernameForSearch, setUsernameForSearch ] = useState();
+  const [ width, setWidth ] = useState('600px');
+  const [ height, setHeight ] = useState('auto');
 
   const submitGetUser = () => {
     if (!usernameForSearch) return;
@@ -15,8 +17,22 @@ const Header = () => {
     if (e.keyCode === 13) submitGetUser();
   };
 
+  const listenScrollEvent = () => {
+    if (window.scrollY > 160) {
+      setWidth('100%');
+      setHeight('200px');
+    } else {
+      setWidth('600px');
+      setHeight('auto');
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", listenScrollEvent)
+  })
+
   return (
-    <S.Wrapper id="header">
+    <S.Wrapper style={{maxWidth: width, height: height}} id="inputHeader">
       <header>GitHub Interface</header>
 
       <div>

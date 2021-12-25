@@ -30,13 +30,13 @@ const GithubProvider = ({ children }) => {
     starred: [],
   });
 
-  const getUser = (username) => {
+  const getUser = async (username) => {
     setGithubState((prevState) => ({
       ...prevState,
       loading: !prevState.loading,
     }));
 
-    api
+    await api
       .get(`users/${username}`)
       .then(({ data }) => {
         setGithubState((prevState) => ({
@@ -66,9 +66,9 @@ const GithubProvider = ({ children }) => {
       });
   };
 
-  const getUserRepos = (username) => {
-    api.get(`users/${username}/repos`).then(({ data }) => {
-      console.log("data: " + JSON.stringify(data));
+  const getUserRepos = async (username) => {
+    await api.get(`users/${username}/repos`).then(({ data }) => {
+      //console.log("data: " + JSON.stringify(data));
       setGithubState((prevState) => ({
         ...prevState,
         repositories: data,
@@ -76,9 +76,9 @@ const GithubProvider = ({ children }) => {
     });
   };
 
-  const getUserStarred = (username) => {
-    api.get(`users/${username}/starred`).then(({ data }) => {
-      console.log("data: " + JSON.stringify(data));
+  const getUserStarred = async (username) => {
+    await api.get(`users/${username}/starred`).then(({ data }) => {
+      //console.log("data: " + JSON.stringify(data));
       setGithubState((prevState) => ({
         ...prevState,
         starred: data,

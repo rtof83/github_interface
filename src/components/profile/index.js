@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useGithub from "../../hooks/github-hooks";
 import * as S from "./styled";
 
 const Profile = () => {
   const { githubState } = useGithub();
+  const [ image, setImage ] = useState('200px');
+  const [ info, setInfo ] = useState(true);
+
+  const listenScrollEvent = () => {
+    if (window.scrollY > 160) {
+      setImage('100px');
+      setInfo(false);
+    } else {
+      setImage('200px');
+      setInfo(true);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", listenScrollEvent)
+  })
 
   return (
-    <S.Wrapper id="profile">
-      <S.WrapperImage id="image" src={githubState.user.avatar} alt="Avatar of user" />
+    <S.Wrapper>
+      <S.WrapperImage style={{width: image}} src={githubState.user.avatar} alt="Avatar of user" />
+      {info ?
       <S.WrapperInfoUser id="infoUser">
         <div>
           <h1>{githubState.user.name}</h1>
@@ -55,6 +72,7 @@ const Profile = () => {
           </div>
         </S.WrapperStatusCount>
       </S.WrapperInfoUser>
+      : null}
     </S.Wrapper>
   );
 };

@@ -6,14 +6,13 @@ const Scroll = () => {
   }
 
   if (document.body.scrollTop > scrollValue || document.documentElement.scrollTop > scrollValue) {
-    element('infoUser').display = 'none';
-    element('header').maxWidth = '100%';
-    element('header').height = '200px';
+    element('infoUser').displaaway = 'none';
+    element('inputHeader').maxWidth = '100%';
+    element('inputHeader').height = '200px';
     element('image').width = '100px';
   } else {
-
-    element('header').maxWidth = '600px';
-    element('header').height = 'auto';
+    element('inputHeader').maxWidth = '600px';
+    element('inputHeader').height = 'auto';
     element('image').width = '200px';
     element('infoUser').display = 'flex';
   }

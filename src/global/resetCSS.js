@@ -48,6 +48,10 @@ header {
   text-align: center;
 }
 
+p {
+  text-align: center;
+}
+
 /**
  * Render the main element consistently in IE.
  */
