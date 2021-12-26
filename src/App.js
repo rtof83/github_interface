@@ -8,8 +8,6 @@ import useGithub from "./hooks/github-hooks";
 const App = () => {
   const { githubState } = useGithub();
 
-  //window.onscroll = function() { Scroll() };
-
   return (
     <Layout>
       {githubState.hasUser ? (
