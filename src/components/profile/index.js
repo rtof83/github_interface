@@ -3,23 +3,19 @@ import useGithub from "../../hooks/github-hooks";
 import * as S from "./styled";
 
 const Profile = () => {
-  const { githubState } = useGithub();
+  const { githubState, scrollEvent } = useGithub();
   const [ image, setImage ] = useState('200px');
   const [ info, setInfo ] = useState(true);
 
-  const listenScrollEvent = () => {
-    if (window.scrollY > 160) {
+  useEffect(() => {
+    if (scrollEvent) {
       setImage('100px');
       setInfo(false);
     } else {
       setImage('200px');
       setInfo(true);
     }
-  }
-
-  useEffect(() => {
-    window.addEventListener("scroll", listenScrollEvent)
-  })
+  }, [scrollEvent])
 
   return (
     <S.Wrapper>
@@ -38,14 +34,17 @@ const Profile = () => {
               {githubState.user.login}
             </a>
           </S.WrapperUserGeneric>
+
           <S.WrapperUserGeneric>
             <h3>Company:</h3>
             <span>{githubState.user.company}</span>
           </S.WrapperUserGeneric>
+
           <S.WrapperUserGeneric>
             <h3>Location:</h3>
             <span>{githubState.user.location}</span>
           </S.WrapperUserGeneric>
+          
           <S.WrapperUserGeneric>
             <h3>Blog:</h3>
             <a href={githubState.user.blog} target="_blank" rel="noreferrer">

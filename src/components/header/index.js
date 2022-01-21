@@ -3,7 +3,7 @@ import * as S from "./styled";
 import useGithub from "../../hooks/github-hooks";
 
 const Header = () => {
-  const { getUser } = useGithub();
+  const { getUser, scrollEvent } = useGithub();
   const [ usernameForSearch, setUsernameForSearch ] = useState();
   const [ width, setWidth ] = useState('600px');
   const [ height, setHeight ] = useState('auto');
@@ -17,19 +17,15 @@ const Header = () => {
     if (e.keyCode === 13) submitGetUser();
   };
 
-  const listenScrollEvent = () => {
-    if (window.scrollY > 160) {
+  useEffect(() => {
+    if (scrollEvent) {
       setWidth('100%');
       setHeight('200px');
     } else {
       setWidth('600px');
       setHeight('auto');
     }
-  }
-
-  useEffect(() => {
-    window.addEventListener("scroll", listenScrollEvent)
-  })
+  }, [scrollEvent])
 
   return (
     <S.Wrapper style={{maxWidth: width, height: height}} id="inputHeader">

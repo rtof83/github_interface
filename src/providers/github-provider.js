@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useState } from "react";
 import api from "../services/api";
+import scrollRange from "../services/scrollRange";
 
 export const GithubContext = createContext({
   loading: false,
@@ -9,6 +10,7 @@ export const GithubContext = createContext({
 });
 
 const GithubProvider = ({ children }) => {
+  const [ scrollEvent, setScrollEvent ] = useState(false);
   const [ githubState, setGithubState ] = useState({
     hasUser: false,
     loading: false,
@@ -84,11 +86,15 @@ const GithubProvider = ({ children }) => {
     });
   };
 
+  window.addEventListener('scroll', () => 
+    window.scrollY > scrollRange ? setScrollEvent(true) : setScrollEvent(false));
+
   const contextValue = {
     githubState,
     getUser: useCallback((username) => getUser(username), []),
     getUserRepos: useCallback((username) => getUserRepos(username), []),
     getUserStarred: useCallback((username) => getUserStarred(username), []),
+    scrollEvent,
   };
 
   return (
